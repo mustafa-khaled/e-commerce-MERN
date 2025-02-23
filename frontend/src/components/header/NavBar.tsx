@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import Link from "@/components/link";
-import { Routes, Pages } from "@/constants/enums";
+import { Routes } from "@/constants/enums";
 import { Menu, X } from "lucide-react"; // For icons
 
 const links = [
   { id: 1, title: "Shop", href: Routes.SHOP },
   { id: 2, title: "About", href: Routes.ABOUT },
   { id: 3, title: "Contact", href: Routes.CONTACT },
-  { id: 4, title: "Login", href: `${Routes.AUTH}/${Pages.LOGIN}` },
+  { id: 4, title: "Cart", href: Routes.CART },
 ];
 
 export default function NavBar() {
