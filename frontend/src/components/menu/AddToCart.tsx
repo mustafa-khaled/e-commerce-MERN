@@ -16,6 +16,8 @@ import {
 } from "@/components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
+import { useAppSelector } from "@/redux/hooks";
+import { selectCartItems } from "@/redux/features/cart/cartSlice";
 
 const sizes = [
   { id: 1, name: "S", price: 0 },
@@ -25,7 +27,10 @@ const sizes = [
 ];
 
 export default function AddToCart({ item }: { item: Product }) {
-  const [selectedSize, setSelectedSize] = useState<string>("S");
+  const cart = useAppSelector(selectCartItems);
+  const defaultSize = cart.find((el) => el.id === item.id)?.size || "S";
+
+  const [selectedSize, setSelectedSize] = useState<string>(defaultSize);
 
   const selectedSizeObj = sizes.find((size) => size.name === selectedSize);
   const finalPrice = item.basePrice + (selectedSizeObj?.price || 0);

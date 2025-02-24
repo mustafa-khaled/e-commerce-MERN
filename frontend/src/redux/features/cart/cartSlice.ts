@@ -1,7 +1,20 @@
 import { RootState } from "@/redux/store";
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+export type CartItem = {
+  id: number;
+  name: string;
+  image: string;
+  basePrice: number;
+  quantity?: number;
+  size?: string;
+};
+
+export type CartState = {
+  items: CartItem[];
+};
+
+const initialState: CartState = {
   items: [],
 };
 
