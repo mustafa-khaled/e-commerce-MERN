@@ -35,6 +35,8 @@ export default function AddToCart({ item }: { item: Product }) {
   const selectedSizeObj = sizes.find((size) => size.name === selectedSize);
   const finalPrice = item.basePrice + (selectedSizeObj?.price || 0);
 
+  const handleAddToCart = () => {};
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -70,6 +72,7 @@ export default function AddToCart({ item }: { item: Product }) {
             variant="secondary"
             className="w-full"
             disabled={!selectedSize}
+            onClick={handleAddToCart}
           >
             Add To Cart ({formatCurrency(finalPrice)})
           </Button>
