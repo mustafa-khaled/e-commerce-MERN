@@ -36,16 +36,17 @@ export const cartSlice = createSlice({
 
     updateItemQuantity: (
       state,
-      action: PayloadAction<{ id: string | number }>
+      action: PayloadAction<{ id: number; type: "increase" | "decrease" }>
     ) => {
       const item = state.items.find((item) => item.id === action.payload.id);
       if (item) {
-        if (item.quantity === 1) {
-          state.items = state.items.filter(
-            (item) => item.id !== action.payload.id
-          );
-        } else {
+        if (action.payload.type === "increase") {
+          item.quantity = (item.quantity || 1) + 1;
+        } else if (action.payload.type === "decrease" && item.quantity! > 1) {
           item.quantity! -= 1;
+        } else {
+          // Remove item if quantity is 1 and user decreases
+          state.items = state.items.filter((i) => i.id !== item.id);
         }
       }
     },

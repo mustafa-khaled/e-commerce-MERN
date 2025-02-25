@@ -16,8 +16,13 @@ import {
 } from "@/components/ui/dialog";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { useAppSelector } from "@/redux/hooks";
-import { selectCartItems } from "@/redux/features/cart/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import {
+  addCartItem,
+  selectCartItems,
+  updateItemQuantity,
+} from "@/redux/features/cart/cartSlice";
+import { getItemQuantity } from "@/lib/cart";
 
 const sizes = [
   { id: 1, name: "S", price: 0 },
@@ -27,6 +32,7 @@ const sizes = [
 ];
 
 export default function AddToCart({ item }: { item: Product }) {
+  const dispatch = useAppDispatch();
   const cart = useAppSelector(selectCartItems);
   const defaultSize = cart.find((el) => el.id === item.id)?.size || "S";
 
@@ -35,7 +41,39 @@ export default function AddToCart({ item }: { item: Product }) {
   const selectedSizeObj = sizes.find((size) => size.name === selectedSize);
   const finalPrice = item.basePrice + (selectedSizeObj?.price || 0);
 
-  const handleAddToCart = () => {};
+  const handleAddToCart = () => {
+    dispatch(addCartItem({ ...item, size: selectedSize }));
+  };
+
+  const handleIncrease = () => {
+    dispatch(addCartItem({ ...item, size: selectedSize }));
+  };
+
+  const handleDecrease = () => {
+    dispatch(updateItemQuantity({ id: item.id, type: "decrease" }));
+  };
+
+  const itemQuantity = getItemQuantity(item.id, cart);
+
+  if (itemQuantity) {
+    return (
+      <div className="flex items-center gap-2">
+        <button
+          onClick={handleDecrease}
+          className="px-3 py-1 bg-gray-300 rounded text-lg"
+        >
+          -
+        </button>
+        <span className="px-3 font-semibold">{itemQuantity}</span>
+        <button
+          onClick={handleIncrease}
+          className="px-3 py-1 bg-blue-500 text-white rounded text-lg"
+        >
+          +
+        </button>
+      </div>
+    );
+  }
 
   return (
     <Dialog>
