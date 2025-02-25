@@ -14,8 +14,10 @@ export type CartState = {
   items: CartItem[];
 };
 
+const initialCartItems = localStorage.getItem("cartItems");
+
 const initialState: CartState = {
-  items: [],
+  items: initialCartItems ? JSON.parse(initialCartItems) : [],
 };
 
 export const cartSlice = createSlice({

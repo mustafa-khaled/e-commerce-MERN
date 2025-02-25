@@ -1,6 +1,7 @@
 "use client";
 
-import { getCartQuantity } from "@/lib/cart";
+import { getCartQuantity, getSubTotal } from "@/lib/cart";
+import { formatCurrency } from "@/lib/formatters";
 import {
   selectCartItems,
   removeItemFromCart,
@@ -19,6 +20,7 @@ export default function CartItems() {
   };
 
   const cartQuantity = getCartQuantity(cart);
+  const subTotal = getSubTotal(cart);
 
   return (
     <div className="bg-gray-300 p-4 w-full max-w-2xl mx-auto">
@@ -78,6 +80,12 @@ export default function CartItems() {
               </div>
             </div>
           ))}
+
+          <div className="flex flex-col gap-3">
+            <span>Sub total: {formatCurrency(subTotal)}</span>
+            <span>Delivery: {formatCurrency(5)}</span>
+            <span className="bg-blue-300">Total: {formatCurrency(5 + subTotal)}</span>
+          </div>
 
           <button
             className="w-full py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition"
