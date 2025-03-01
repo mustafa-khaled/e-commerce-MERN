@@ -1,7 +1,7 @@
 import Container from "@/components/container";
-import CartItems from "@/app/_components/cart/CartItems";
+import CartItems from "@/app/[locale]/_components/cart/CartItems";
 import MainHeading from "@/components/main-heading";
-import Checkout from "@/app/_components/cart/Checkout";
+import Checkout from "@/app/[locale]/_components/cart/Checkout";
 
 export default function CartPage() {
   return (

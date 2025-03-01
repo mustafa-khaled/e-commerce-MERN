@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "@/components/link";
 import { Routes } from "@/constants/enums";
 import { Menu, X } from "lucide-react"; // For icons
+import { useParams, usePathname } from "next/navigation";
 
 const links = [
   { id: 1, title: "Shop", href: Routes.SHOP },
@@ -14,6 +15,8 @@ const links = [
 
 export default function NavBar() {
   const [openMenu, setOpenMenu] = useState(false);
+  const { locale } = useParams();
+  const pathname = usePathname();
 
   const toggleMenu = () => setOpenMenu((prev) => !prev);
 
@@ -40,7 +43,16 @@ export default function NavBar() {
             key={link.id}
             className="p-4 border-b-2 border-green-500 border-opacity-0 hover:border-opacity-100 hover:text-green-500 duration-200 cursor-pointer"
           >
-            <Link href={`/${link.href}`}>{link.title}</Link>
+            <Link
+              href={`/${locale}/${link.href}`}
+              className={
+                pathname.startsWith(`/${locale}/${link.href}`)
+                  ? "text-red-500"
+                  : ""
+              }
+            >
+              {link.title}
+            </Link>
           </li>
         ))}
       </ul>
